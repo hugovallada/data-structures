@@ -4,25 +4,25 @@ import (
 	"errors"
 )
 
-type GenericList[T comparable] struct {
+type List[T comparable] struct {
 	data []T
 }
 
-func New[T comparable]() *GenericList[T] {
-	return &GenericList[T]{
+func New[T comparable]() *List[T] {
+	return &List[T]{
 		data: []T{},
 	}
 }
 
-func (l *GenericList[T]) Insert(value T) {
+func (l *List[T]) Insert(value T) {
 	l.data = append(l.data, value)
 }
 
-func (l *GenericList[T]) InsertAll(values ...T) {
+func (l *List[T]) InsertAll(values ...T) {
 	l.data = append(l.data, values...)
 }
 
-func (l *GenericList[T]) Get(i int) (T, error) {
+func (l *List[T]) Get(i int) (T, error) {
 	var value T
 	if err := indexIsValid(i, len(l.data)); err != nil {
 		return value, err
@@ -35,7 +35,7 @@ func (l *GenericList[T]) Get(i int) (T, error) {
 	return value, nil
 }
 
-func (l *GenericList[T]) Remove(index int) (T, error) {
+func (l *List[T]) Remove(index int) (T, error) {
 	var value T
 	if err := indexIsValid(index, len(l.data)); err != nil {
 		return value, err
@@ -49,7 +49,7 @@ func (l *GenericList[T]) Remove(index int) (T, error) {
 	return value, nil
 }
 
-func (l *GenericList[T]) RemoveByValue(value T) error {
+func (l *List[T]) RemoveByValue(value T) error {
 	index, err := l.GetIndex(value)
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func (l *GenericList[T]) RemoveByValue(value T) error {
 	return nil
 }
 
-func (l *GenericList[T]) GetIndex(value T) (int, error) {
+func (l *List[T]) GetIndex(value T) (int, error) {
 	for index, val := range l.data {
 		if val == value {
 			return index, nil
@@ -67,7 +67,7 @@ func (l *GenericList[T]) GetIndex(value T) (int, error) {
 	return 0, errors.New("value not found")
 }
 
-func (l *GenericList[T]) UpdateValue(oldValue, newValue T) error {
+func (l *List[T]) UpdateValue(oldValue, newValue T) error {
 	index, err := l.GetIndex(oldValue)
 	if err != nil {
 		return err
