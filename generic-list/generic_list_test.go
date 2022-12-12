@@ -194,3 +194,12 @@ func TestUpdateValue_ShouldReturnAnErrorWhenValueNotFound(t *testing.T) {
 		t.Errorf("expected 2, but got %d\n", len(list.data))
 	}
 }
+
+func TestClearList(t *testing.T) {
+	list := New[string]()
+	list.InsertAll("ola", "mundo")
+	list.Clear()
+	if len(list.data) > 0 {
+		t.Errorf("Expected list to be empty, but it's not")
+	}
+}

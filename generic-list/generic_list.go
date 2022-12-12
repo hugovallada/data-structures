@@ -76,6 +76,10 @@ func (l *List[T]) UpdateValue(oldValue, newValue T) error {
 	return nil
 }
 
+func (l *List[T]) Clear() {
+	l.data = []T{}
+}
+
 func indexIsValid(index, length int) error {
 	if index < 0 {
 		return errors.New("index can't be negative")
