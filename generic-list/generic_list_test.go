@@ -53,6 +53,19 @@ func TestGet_ShouldReturnErrorWhenIndexIsOutOfBound(t *testing.T) {
 	}
 }
 
+func TestGet_ShouldReturnErrorWhenNegativeIndexIsGiven(t *testing.T) {
+	var expected string = "index can't be negative"
+	list := New[string]()
+	list.InsertAll("ola", "mundo")
+	_, err := list.Get(-5)
+	if err == nil {
+		t.Errorf("Expected %s, got %s", expected, err)
+	}
+	if err.Error() != expected {
+		t.Errorf("Expected %s, got %s", expected, err.Error())
+	}
+}
+
 func TestGetIndex(t *testing.T) {
 	var expected = 5
 	list := New[string]()

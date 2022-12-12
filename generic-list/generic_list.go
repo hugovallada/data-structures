@@ -24,23 +24,21 @@ func (l *GenericList[T]) InsertAll(values ...T) {
 
 func (l *GenericList[T]) Get(i int) (T, error) {
 	var value T
-	if i > len(l.data)-1 {
-		return value, errors.New("index is too high")
+	if err := indexIsValid(i, len(l.data)); err != nil {
+		return value, err
 	}
-
 	for it := 0; it < len(l.data); it++ {
 		if i == it {
 			value = l.data[it]
 		}
 	}
-
 	return value, nil
 }
 
 func (l *GenericList[T]) Remove(index int) (T, error) {
 	var value T
-	if index > len(l.data)-1 {
-		return value, errors.New("index is too high")
+	if err := indexIsValid(index, len(l.data)); err != nil {
+		return value, err
 	}
 	for it := 0; it < len(l.data); it++ {
 		if index == it {
@@ -76,4 +74,14 @@ func (l *GenericList[T]) UpdateValue(oldValue, newValue T) error {
 	}
 	l.data[index] = newValue
 	return nil
+}
+
+func indexIsValid(index, length int) error {
+	if index < 0 {
+		return errors.New("index can't be negative")
+	} else if index > length-1 {
+		return errors.New("index is too high")
+	} else {
+		return nil
+	}
 }
